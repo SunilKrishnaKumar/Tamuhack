@@ -99,10 +99,10 @@ def status(soup, Airport_list):
         Status_str.append(i.get_text())
     for i in soup.find_all("div", class_="text-helper__TextHelper-s8bko4a-0 cCfBRT"):
         Time_status.append(i.get_text())
-  
+    
     # traverse the Data
     # from scarping data
-    for item in range(4):
+    """for item in range(4):
         if item == 0:
             print(Airport_list[0])
         if item == 2:
@@ -111,14 +111,16 @@ def status(soup, Airport_list):
         print(Status_str[item] + " : " + Time_status[item])
         print(Gate[item] + " : " + Gate_no[item])
     for item in range(len(Gate)):
-        print(Gate[item] + " : " + Gate_no[item])
-  
+        print(Gate[item] + " : " + Gate_no[item])"""
+    return Time_status
   
   
 def flight_info(Airline_code, Flight_number, Date, Month, Year):
     soup = get_html(Airline_code, Flight_number, Date, Month, Year)
     Airport_list = airport(soup)
-    return Airport_list[0], Airport_list[1]
+    time = status(soup, Airport_list)
+    
+    return Airport_list[0], Airport_list[1], time[0]
     
 # Driver code
 if __name__ == '__main__':
@@ -126,6 +128,7 @@ if __name__ == '__main__':
     
     weather_op = weather_("New York")
     print("Weather:", weather_op)
-    dep, arr = flight_info('UA','746','02','02','2021')
+    dep, arr, time_dep = flight_info('UA','746','02','02','2021')
     print("Departure: ",dep)
     print("Arrival: ",arr)
+    print("Time Departure:", time_dep)
